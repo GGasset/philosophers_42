@@ -6,17 +6,17 @@
 #    By: ggasset- <ggasset-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/02 12:49:28 by ggasset-          #+#    #+#              #
-#    Updated: 2025/02/26 13:25:52 by ggasset-         ###   ########.fr        #
+#    Updated: 2025/03/04 15:14:26 by ggasset-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME=philosophers
+NAME=philo
 
 ARCHIVES=
 
 COMPILER= cc
-O_FILES=constructors.o	dealloc.o  ft_atoi_s.o	main.o  observer.o  parsing.o policies.o	utils.o
-LINK_FLAGS= -lpthread #-fsanitize=leak
+O_FILES=constructors.o	dealloc.o  ft_atoi_s.o	main.o  observer.o  parsing.o policies.o utils.o
+LINK_FLAGS= -lpthread #-fsanitize=thread
 CC_SECURITY_FLAGS= -Wall -Wextra -Werror 
 CC_FLAGS= -g 
 

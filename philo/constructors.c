@@ -6,7 +6,7 @@
 /*   By: ggasset- <ggasset-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 14:06:56 by ggasset-          #+#    #+#             */
-/*   Updated: 2025/02/26 12:06:41 by ggasset-         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:30:24 by ggasset-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ void	philo_init(t_philo *philo, t_args args, t_meeting *meeting)
 	i = philo->inmate_i;
 	philo->eat_protection = meeting->eat_protection + i;
 	if (meeting->philo_count <= 1)
+	{
+		philo->left_fork = meeting->forks;
 		return ;
+	}
 	philo->left_fork = meeting->forks + get_index(i, -1, args.n_philo);
 	philo->right_fork = meeting->forks + i;
 }

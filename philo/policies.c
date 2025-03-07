@@ -6,7 +6,7 @@
 /*   By: ggasset- <ggasset-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:43:41 by ggasset-          #+#    #+#             */
-/*   Updated: 2025/02/26 13:18:31 by ggasset-         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:40:21 by ggasset-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,19 @@ static int	grab_fork(t_philo *philo, int right_fork)
 		fork = philo->right_fork;
 	else
 		fork = philo->left_fork;
+	if (!fork)
+	{
+		check_err(usleep(philo->args.die_t * 1000), philo);
+		philo->stop = 1;
+		*philo->err = 1;
+		return (0);
+	}
 	check_err(pthread_mutex_lock(fork), philo);
 	if (philo->stop)
 		return (1);
 	printf("%u %u has taken a fork\n",
 		(unsigned int)get_elapsed_ms(philo->born_time),
-		(unsigned int)philo->inmate_i);
+		(unsigned int)philo->inmate_i + 1);
 	return (1);
 }
 
@@ -59,7 +66,7 @@ static void	eat(t_philo *philo)
 	}
 	check_err(gettimeofday(&philo->last_ate_time, NULL), philo);
 	printf("%u %u is eating\n", (unsigned int)get_elapsed_ms(philo->born_time),
-		(unsigned int)philo->inmate_i);
+		(unsigned int)philo->inmate_i + 1);
 	check_err(pthread_mutex_unlock(philo->eat_protection), philo);
 	check_err(usleep(philo->args.eat_t * 1000), philo);
 	philo->n_servings++;
@@ -73,7 +80,7 @@ static void	sleepy_t(t_philo *philo)
 		return ;
 	printf("%u %u is sleeping\n",
 		(unsigned int)get_elapsed_ms(philo->born_time),
-		(unsigned int)philo->inmate_i);
+		(unsigned int)philo->inmate_i + 1);
 	check_err(usleep(philo->args.sleep_t * 1000), philo);
 }
 
@@ -86,20 +93,16 @@ void	*philosopher_policy(void *raw_philo)
 	i = philo->inmate_i;
 	check_err(gettimeofday(&philo->born_time, NULL), philo);
 	check_err(gettimeofday(&philo->last_ate_time, NULL), philo);
-	if (!philo->left_fork || !philo->right_fork)
-		check_err(usleep(philo->args.die_t * 1000), philo);
 	check_err(usleep((i % 2) * 2000), philo);
 	while (!philo->stop)
 	{
-		if (!philo->left_fork || !philo->right_fork)
-			continue ;
 		eat(philo);
 		sleepy_t(philo);
 		if (philo->stop)
 			break ;
 		printf("%u %u is thinking\n",
 			(unsigned int)get_elapsed_ms(philo->born_time),
-			(unsigned int)philo->inmate_i);
+			(unsigned int)philo->inmate_i + 1);
 		check_err(usleep((i % 2) * 2000), philo);
 		i++;
 	}

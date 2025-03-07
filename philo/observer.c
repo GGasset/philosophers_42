@@ -6,7 +6,7 @@
 /*   By: ggasset- <ggasset-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:51:53 by ggasset-          #+#    #+#             */
-/*   Updated: 2025/02/12 13:23:28 by ggasset-         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:33:18 by ggasset-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	observe_philosophers(t_meeting *meeting)
 	write(2, "Syscall err\n", 13 * meeting->err);
 	send_stop_signal(meeting);
 	if (stop == 2)
-		printf("%u %u died\n", (unsigned int)elapsed_ms, (unsigned int)i);
+		printf("%u %u died\n", (unsigned int)elapsed_ms, (unsigned int)i + 1);
 	join_threads(meeting);
 }
 
